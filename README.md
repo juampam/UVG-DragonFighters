@@ -28,7 +28,6 @@ The game is based on this history:
 
 *Shadows of Destiny: Choose your path, for the dance of shadows has just begun.*
 
-Coming soon to a gaming console near you... or whatever.
 
 # How to install
 - clone this repository
