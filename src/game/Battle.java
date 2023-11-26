@@ -16,13 +16,17 @@ public class Battle {
     }
 
     public void startBattle() {
-        System.out.println("Welcome to the Battle!");
+       clearConsole();
+
+        System.out.println("The Battle will start soon!");
 
         // Get user instructions to create combatants and select items
         createCombatants();
+        clearConsole();
         selectItems(player1);
+        clearConsole();
         selectItems(player2);
-
+        clearConsole();
         // Display combatants and start the battle
         System.out.println("Player 1: " + player1.getName());
         System.out.println("Player 2: " + player2.getName());
@@ -52,15 +56,21 @@ public class Battle {
     }
 
     private void createCombatants() {
-        // Get user instructions to create combatants
         System.out.println("Create Combatant for Player 1:");
-        player1 = createCombatant("Player1");
-
-        System.out.println("\nCreate Combatant for Player 2:");
-        player2 = createCombatant("Player2");
-
-        System.out.println("\nSelect Enemy:");
+        System.out.println("Name:");
+        String thename = scanner.nextLine();
+        player1 = createCombatant(thename);
+    
+        scanner.nextLine();
+    
+        System.out.println("Create Combatant for Player 2:");
+        System.out.println("Name:");
+        String p2 = scanner.nextLine();
+        player2 = createCombatant(p2);
+    
+        System.out.println("\nSearching for Enemies");
         enemy = createEnemy();
+        System.out.println("Enemy Founded, you will gonna fight with" + "\"" + enemy.getName()+ "\"");
     }
 
     private Combatant createCombatant(String playerName) {
@@ -82,40 +92,80 @@ public class Battle {
     }
 
     private Enemy createEnemy() {
-        System.out.println("Select Enemy Type:");
-        System.out.println("1. Feudal Lord");
-        // Add more enemy types as needed
-
-        int choice = scanner.nextInt();
-
-        switch (choice) {
+        int randomChoice = (int) (Math.random() * 4) + 1; // Generates a random number between 1 and 4
+    
+        switch (randomChoice) {
             case 1:
                 return new FeudalLord();
-            // Add cases for more enemy types
+            case 2:
+                return new LegendaryFeudalLord();
+            case 3:
+                return new Yokai();
+            case 4:
+                return new LegendaryYokai();
             default:
-                System.out.println("Invalid choice. Defaulting to Feudal Lord.");
+                System.out.println("Something went wrong. Defaulting to Feudal Lord.");
                 return new FeudalLord();
         }
     }
-
+    
     private void selectItems(Combatant player) {
         System.out.println("\nSelect Items for " + player.getName() + ":");
-       
-         System.out.println("1. Health Potion");
-         System.out.println("2. Attack Boost");
-         int choice = scanner.nextInt();
-         switch (choice) {
-             case 1:
-                 player.addItem(new HealingItem("Health Potion"));
-                 break;
-             case 2:
-                 player.addItem(new AttackItem("Attack Boost"));
-                 break;
-             default:
-                 System.out.println("Invalid choice. No items selected.");
-                 break;
-         }
+    
+        int maxItems;
+        if (player instanceof Warrior) {
+            System.out.println("1. Bandage");
+            System.out.println("2. Sacred Sword");
+            maxItems = 2;
+        } else if (player instanceof Explorer) {
+            System.out.println("1. Bandage");
+            System.out.println("2. Sacred Sword");
+            System.out.println("3. Invisibility");
+            System.out.println("4. Barrier");
+            System.out.println("5. Health Potion");
+            maxItems = 4;
+        } else {
+            System.out.println("Invalid Combatant type.");
+            return;
+        }
+    
+        for (int i = 0; i < maxItems; i++) {
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    player.addItem(new HealingItem("bandage"));
+                    break;
+                case 2:
+                    player.addItem(new AttackItem("Sacred Sword"));
+                    break;
+                case 3:
+                    if (player instanceof Explorer) {
+                        player.addItem(new MagicItem("invisibility"));
+                    } else {
+                        System.out.println("Invalid choice. No items selected.");
+                    }
+                    break;
+                case 4:
+                    if (player instanceof Explorer) {
+                        player.addItem(new MagicItem("Barrier"));
+                    } else {
+                        System.out.println("Invalid choice. No items selected.");
+                    }
+                    break;
+                case 5:
+                    if (player instanceof Explorer) {
+                        player.addItem(new HealingItem("Health Potion"));
+                    } else {
+                        System.out.println("Invalid choice. No items selected.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid choice. No items selected.");
+                    break;
+            }
+        }
     }
+    
 
     private void executeTurn(Combatant attacker, Enemy enemy) {
         displayStatus(player1, player2, enemy);
@@ -130,7 +180,7 @@ public class Battle {
             System.out.println("Enemy's Turn:");
             enemyTurn(enemy);
         }
-
+        clearConsole();
         displayStatus(player1, player2, enemy);
     }
 
@@ -200,10 +250,38 @@ public class Battle {
     }
 
     private void displayStatus(Combatant player1, Combatant player2, Enemy enemy) {
+        clearConsole();
         System.out.println("\nCurrent Status:");
         System.out.println(player1.getName() + " - Life: " + player1.getLife());
         System.out.println(player2.getName() + " - Life: " + player2.getLife());
         System.out.println(enemy.getName() + " - Life: " + enemy.getLife());
     }
+    public static void clearConsole() {
+        try {
+            final String os = System.getProperty("os.name").toLowerCase();
+    
+            String command;
+    
+            switch (os) {
+                case "windows":
+                    command = "cmd /c cls";
+                    break;
+                case "linux":
+                case "mac os x":
+                case "unix":
+                    command = "clear";
+                    break;
+                default:
+                    System.out.println("Unsupported operating system for console clearing.");
+                    return;
+            }
+    
+            new ProcessBuilder(command.split(" ")).inheritIO().start().waitFor();
+        } catch (final Exception e) {
+            // Handle exceptions as needed
+            System.out.println("Failed to clear console.");
+        }
+    }
+    
     
 }

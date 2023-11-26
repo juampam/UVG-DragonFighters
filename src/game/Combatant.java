@@ -52,8 +52,10 @@ public class Combatant {
 
     public void addItem(Item item) {
         if (inventory.size() < inventoryCapacity) {
+            int spaces =  inventoryCapacity - inventory.size();
+            System.out.println(spaces);
             inventory.add(item);
-            System.out.println(this.name + " added " + item.getName() + " to the inventory.");
+            System.out.println(this.name + " added " + item.getName() + ", Add another" /* " to the inventory, Can add " + spaces +" More"*/);
         } else {
             System.out.println(this.name + "'s inventory is full. Cannot add " + item.getName() + ".");
         }
