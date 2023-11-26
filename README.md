@@ -48,7 +48,7 @@ java Main
 
 # About
 ## UML DIAGRAM:
-![UML-Classes]([URL_de_la_Imagen](https://github.com/juampam/UVG-DragonFighters/blob/main/img/Game.png))
+![UML-Classes](https://github.com/juampam/UVG-DragonFighters/blob/main/img/Game.png)
 
 ## Developer Notes
 - Los ultimos comits son del README, no se modificó el código fuente.
