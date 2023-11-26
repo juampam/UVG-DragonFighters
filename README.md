@@ -54,5 +54,6 @@ java Main
 - Dicho esto, se debe aclarar que se seguirán haciendo commits para darle un buen formato al README
 - Está sección se borrará cuando la nota sea actualizada
 - **Importante:** Recordar que el contenido principal del README y de el proyecto está en ingles, porque este perfil de GitHub sirve como Portafolio, por eso mismo, es importante para el desarrollador, hacer modificaciones al README después de la fecha de entrega, se puede verificar los commits para asegurarse que no se está modificando ningún entregable.
+- por hacer, desplegar frases.
 
 
